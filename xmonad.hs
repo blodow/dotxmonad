@@ -29,7 +29,7 @@ genericLayout =	nameTail $ maximize $ smartBorders $
   ratio   = 1/2
   -- Percent of screen to increment by when resizing panes
   delta   = 3/100
- 
+
 myLogHook :: Handle -> X ()
 myLogHook h =
   dynamicLogWithPP $ xmobarPP
@@ -43,13 +43,13 @@ main = do
 xmproc <- spawnPipe "/usr/bin/xmobar /home/blodow/.xmonad/xmobarrc"
 xmonad $ defaultConfig
   { manageHook = manageDocks <+> manageHook defaultConfig
-  , normalBorderColor = "black" 
-  , focusedBorderColor = "#D75F5F" 
+  , normalBorderColor = "black"
+  , focusedBorderColor = "#D75F5F"
   , borderWidth = 4
   , workspaces = myWorkspaces
   , logHook = logHook gnomeConfig <+> myLogHook xmproc
   --, layoutHook = avoidStruts $ spacing 2 $ layoutHook defaultConfig
-  , layoutHook = avoidStruts $ spacing 2 $ genericLayout
+  , layoutHook = avoidStruts . spacing 2 $ genericLayout
   } `additionalKeys`
   [ ((mod4Mask .|. shiftMask, xK_z), spawn "gnome-screensaver-command --lock")  --mod4mask is the windows key
   , ((0, xK_Print), spawn "gnome-screenshot")
