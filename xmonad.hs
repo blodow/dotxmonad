@@ -16,9 +16,14 @@ import XMonad.Layout.Named
 
 import XMonad.Util.Themes
 
+myTheme = donaldTheme { theme = (theme donaldTheme) { activeColor = "#D75F5F"
+                                                    , activeBorderColor = "#D75F5F"
+                                                    }
+                      }
+
 genericLayout =	nameTail $ maximize $ smartBorders $
-      named "T" tiled 
-  ||| named "M" (tabbed shrinkText (theme smallClean))
+      named "T" tiled
+  ||| named "M" (tabbed shrinkText (theme myTheme))
   ||| named "F" simplestFloat
  where
   -- default tiling algorithm partitions the screen into two panes
