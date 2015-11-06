@@ -1,4 +1,4 @@
-Config { 
+Config {
 
    -- appearance
      font =         "xft:Bitstream Vera Sans Mono:size=8:bold:antialias=false"
@@ -92,7 +92,7 @@ Config {
                                        -- discharging status
                                        , "-o"	, "<left>% (<timeleft>)"
                                        -- AC "on" status
-                                       , "-O"	, "<fc=#dAA520>charge</fc>"
+                                       , "-O"	, "<fc=#dAA520>charge</fc> (<left>%)"
                                        -- charged status
                                        , "-i"	, "<fc=#4682B4>full</fc>"
                              ] 50
