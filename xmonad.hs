@@ -54,7 +54,7 @@ xmonad $ defaultConfig
   , workspaces = myWorkspaces
   , logHook = logHook gnomeConfig <+> myLogHook xmproc
   --, layoutHook = avoidStruts $ spacing 2 $ layoutHook defaultConfig
-  , layoutHook = avoidStruts . spacing 2 $ genericLayout
+  , layoutHook = avoidStruts . smartSpacing 2 $ genericLayout
   } `additionalKeys`
   [ ((mod4Mask .|. shiftMask, xK_z), spawn "gnome-screensaver-command --lock")  --mod4mask is the windows key
   , ((0, xK_Print), spawn "gnome-screenshot")
