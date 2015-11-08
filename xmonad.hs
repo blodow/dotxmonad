@@ -72,6 +72,8 @@ xmonad $ defaultConfig
   } `additionalKeys`
   [ ((modm .|. shiftMask, xK_z), spawn "gnome-screensaver-command --lock")
   , ((0, xK_Print), spawn "gnome-screenshot")
+  , ((modm, xK_F1), spawn "firefox")
+  , ((modm, xK_F2), spawn "dmenu_run")
   -- Move focus to the master window
   , ((modm, xK_m), withFocused $ sendMessage . maximizeRestore )
   -- Swap window
