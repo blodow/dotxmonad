@@ -28,10 +28,10 @@ myTheme = donaldTheme { theme = (theme donaldTheme) { activeColor = myHighlight
                       }
 
 genericLayout =	nameTail $ maximize $ smartBorders $
-      named "<icon=/home/blodow/.xmonad/icons/tiledM.xbm/>" tiled
-  ||| named "<icon=/home/blodow/.xmonad/icons/grid.xbm/>" Grid
-  ||| named "<icon=/home/blodow/.xmonad/icons/tabbed.xbm/>" (tabbed shrinkText (theme myTheme))
-  ||| named "<icon=/home/blodow/.xmonad/icons/float.xbm/>" simplestFloat
+      named "<icon=/home/blodow/.xmonad/icons/tiledM.xbm/>" (mySpacing tiled)
+  ||| named "<icon=/home/blodow/.xmonad/icons/grid.xbm/>" (mySpacing Grid)
+  ||| named "<icon=/home/blodow/.xmonad/icons/tabbed.xbm/>" (mySpacing $ tabbed shrinkText (theme myTheme))
+  ||| named "<icon=/home/blodow/.xmonad/icons/float.xbm/>" (mySpacing simplestFloat)
  where
   -- default tiling algorithm partitions the screen into two panes
   tiled   = Tall nmaster delta ratio
@@ -56,6 +56,8 @@ myLogHook h =
 
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 
+mySpacing = smartSpacing 2
+
 modm = mod4Mask  --mod4mask is the windows key
 
 main = do
@@ -68,7 +70,7 @@ xmonad $ defaultConfig
   , workspaces = myWorkspaces
   , logHook = logHook gnomeConfig <+> myLogHook xmproc
   --, layoutHook = avoidStruts $ spacing 2 $ layoutHook defaultConfig
-  , layoutHook = avoidStruts . smartSpacing 2 $ myLayout
+  , layoutHook = avoidStruts $ myLayout
   } `additionalKeys`
   [ ((modm .|. shiftMask, xK_z), spawn "gnome-screensaver-command --lock")
   , ((0, xK_Print), spawn "gnome-screenshot")
