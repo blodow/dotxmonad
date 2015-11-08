@@ -28,9 +28,10 @@ myTheme = donaldTheme { theme = (theme donaldTheme) { activeColor = myHighlight
                       }
 
 genericLayout =	nameTail $ maximize $ smartBorders $
-      named "T" tiled
-  ||| named "M" (tabbed shrinkText (theme myTheme))
-  ||| named "F" simplestFloat
+      named "<icon=/home/blodow/.xmonad/icons/tiledM.xbm/>" tiled
+  ||| named "<icon=/home/blodow/.xmonad/icons/grid.xbm/>" Grid
+  ||| named "<icon=/home/blodow/.xmonad/icons/tabbed.xbm/>" (tabbed shrinkText (theme myTheme))
+  ||| named "<icon=/home/blodow/.xmonad/icons/float.xbm/>" simplestFloat
  where
   -- default tiling algorithm partitions the screen into two panes
   tiled   = Tall nmaster delta ratio
