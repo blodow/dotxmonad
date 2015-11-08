@@ -8,7 +8,10 @@ import XMonad.Util.EZConfig(additionalKeys)
 import System.IO
 
 import XMonad.Layout.Maximize
+import XMonad.Layout.PerWorkspace
 import XMonad.Layout.NoBorders
+import XMonad.Layout.TwoPane
+import XMonad.Layout.ComboP
 import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Tabbed
 import XMonad.Layout.Grid
@@ -38,6 +41,11 @@ genericLayout =	nameTail $ maximize $ smartBorders $
   -- Percent of screen to increment by when resizing panes
   delta   = 3/100
 
+-- (Const False)
+myLayout = onWorkspace "1" (named "IM" $ combineTwoP
+                            (TwoPane 0.03 0.8) (tabbed shrinkText (theme myTheme)) Grid (ClassName "Firefox")) $
+           genericLayout
+
 myLogHook :: Handle -> X ()
 myLogHook h =
   dynamicLogWithPP $ xmobarPP
@@ -59,7 +67,7 @@ xmonad $ defaultConfig
   , workspaces = myWorkspaces
   , logHook = logHook gnomeConfig <+> myLogHook xmproc
   --, layoutHook = avoidStruts $ spacing 2 $ layoutHook defaultConfig
-  , layoutHook = avoidStruts . smartSpacing 2 $ genericLayout
+  , layoutHook = avoidStruts . smartSpacing 2 $ myLayout
   } `additionalKeys`
   [ ((modm .|. shiftMask, xK_z), spawn "gnome-screensaver-command --lock")
   , ((0, xK_Print), spawn "gnome-screenshot")
