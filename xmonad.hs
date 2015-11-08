@@ -16,8 +16,11 @@ import XMonad.Layout.Named
 
 import XMonad.Util.Themes
 
-myTheme = donaldTheme { theme = (theme donaldTheme) { activeColor = "#D75F5F"
-                                                    , activeBorderColor = "#D75F5F"
+myHighlight :: String
+myHighlight = "#D75F5F"
+
+myTheme = donaldTheme { theme = (theme donaldTheme) { activeColor = myHighlight
+                                                    , activeBorderColor = myHighlight
                                                     }
                       }
 
@@ -42,23 +45,27 @@ myLogHook h =
     , ppTitle = xmobarColor "green" "" . shorten 50
     }
 
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
+
+modm = mod4Mask  --mod4mask is the windows key
 
 main = do
 xmproc <- spawnPipe "/usr/bin/xmobar /home/blodow/.xmonad/xmobarrc"
 xmonad $ defaultConfig
   { manageHook = manageDocks <+> manageHook defaultConfig
   , normalBorderColor = "black"
-  , focusedBorderColor = "#D75F5F"
+  , focusedBorderColor = myHighlight
   , borderWidth = 4
   , workspaces = myWorkspaces
   , logHook = logHook gnomeConfig <+> myLogHook xmproc
   --, layoutHook = avoidStruts $ spacing 2 $ layoutHook defaultConfig
   , layoutHook = avoidStruts . smartSpacing 2 $ genericLayout
   } `additionalKeys`
-  [ ((mod4Mask .|. shiftMask, xK_z), spawn "gnome-screensaver-command --lock")  --mod4mask is the windows key
+  [ ((modm .|. shiftMask, xK_z), spawn "gnome-screensaver-command --lock")
   , ((0, xK_Print), spawn "gnome-screenshot")
   -- Move focus to the master window
-  , ((mod4Mask, xK_m), withFocused $ sendMessage . maximizeRestore )
+  , ((modm, xK_m), withFocused $ sendMessage . maximizeRestore )
+  -- Swap window
+  , ((modm, xK_o), sendMessage $ SwapWindow)
   ]
 
