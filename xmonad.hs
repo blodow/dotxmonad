@@ -56,7 +56,7 @@ genericLayout =	nameTail $ maximize $ smartBorders $
 
 -- (Const False)
 myLayout = onWorkspace "1" (named "IM" $ combineTwoP
-                            (TwoPane 0.03 0.8) (tabbed shrinkText (theme myTheme)) Grid (ClassName "Firefox")) $
+                            (TwoPane 0.03 0.8) (tabbed shrinkText (theme myTheme)) Grid (ClassName "Firefox"))
            genericLayout
 
 myLogHook :: Handle -> X ()
