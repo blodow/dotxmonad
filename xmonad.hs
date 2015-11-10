@@ -17,6 +17,8 @@ import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Tabbed
 import XMonad.Layout.Grid
 import XMonad.Layout.Named
+import XMonad.Layout.MultiToggle
+import XMonad.Layout.MultiToggle.Instances
 
 import XMonad.Util.Themes
 
@@ -56,8 +58,8 @@ genericLayout =	nameTail $ maximize $ smartBorders $
 
 -- (Const False)
 myLayout = onWorkspace "1" (named "IM" $ combineTwoP
-                            (TwoPane 0.03 0.8) (tabbed shrinkText (theme myTheme)) Grid (ClassName "Firefox"))
-           genericLayout
+                            (TwoPane 0.03 0.8) (tabbed shrinkText (theme myTheme)) Grid (ClassName "Firefox")) $
+           mkToggle (NOBORDERS ?? FULL ?? EOT) genericLayout
 
 myLogHook :: Handle -> X ()
 myLogHook h =
@@ -107,6 +109,7 @@ myKeys pid conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_k), windows W.focusUp)
     -- Move focus to the master window
     , ((modm, xK_m), withFocused $ sendMessage . maximizeRestore)
+    , ((modm, xK_f), sendMessage $ Toggle FULL)
     -- Swap the focused window and the master window
     , ((modm .|. shiftMask,  xK_Return), windows W.swapMaster)
     -- Swap window
