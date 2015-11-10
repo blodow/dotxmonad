@@ -3,6 +3,7 @@ import XMonad.Actions.CycleWS
 import XMonad.Config.Gnome
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.Spacing
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
@@ -143,10 +144,18 @@ myKeys pid conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
 
+myManageHook = composeAll [
+    manageDocks,
+    isFullscreen --> doFullFloat,
+    className =? "Vlc" --> doFloat,
+    resource =? "stalonetray" --> doIgnore,
+    manageHook defaultConfig
+  ]
+
 main = do
   (xmproc, pid) <- mySpawnPipe "/usr/bin/xmobar /home/blodow/.xmonad/xmobarrc"
   xmonad $ gnomeConfig
-    { manageHook = manageDocks <+> manageHook defaultConfig
+    { manageHook = myManageHook
     , normalBorderColor = "black"
     , focusedBorderColor = myHighlight
     , focusFollowsMouse = False
@@ -156,6 +165,6 @@ main = do
     , modMask = mod1Mask --mod4mask is the alt key
     , workspaces = myWorkspaces
     , logHook = logHook gnomeConfig <+> myLogHook xmproc
-    , layoutHook = avoidStruts myLayout
+    , layoutHook = smartBorders . avoidStruts $ myLayout
     }
 
