@@ -30,8 +30,8 @@ myTheme = donaldTheme { theme = (theme donaldTheme) { activeColor = myHighlight
 genericLayout =	nameTail $ maximize $ smartBorders $
       named "<icon=/home/blodow/.xmonad/icons/tiledM.xbm/>" (mySpacing tiled)
   ||| named "<icon=/home/blodow/.xmonad/icons/grid.xbm/>" (mySpacing Grid)
-  ||| named "<icon=/home/blodow/.xmonad/icons/tabbed.xbm/>" (mySpacing $ tabbed shrinkText (theme myTheme))
-  ||| named "<icon=/home/blodow/.xmonad/icons/float.xbm/>" (mySpacing simplestFloat)
+  ||| named "<icon=/home/blodow/.xmonad/icons/tabbed.xbm/>" (tabbed shrinkText (theme myTheme))
+  ||| named "<icon=/home/blodow/.xmonad/icons/float.xbm/>" simplestFloat
  where
   -- default tiling algorithm partitions the screen into two panes
   tiled   = Tall nmaster delta ratio
@@ -41,6 +41,8 @@ genericLayout =	nameTail $ maximize $ smartBorders $
   ratio   = 1/2
   -- Percent of screen to increment by when resizing panes
   delta   = 3/100
+  -- space around windows unless they are the sole window on the current workspace
+  mySpacing = smartSpacing 2
 
 -- (Const False)
 myLayout = onWorkspace "1" (named "IM" $ combineTwoP
@@ -56,7 +58,6 @@ myLogHook h =
 
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 
-mySpacing = smartSpacing 2
 
 modm = mod4Mask  --mod4mask is the windows key
 
